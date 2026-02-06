@@ -19,6 +19,12 @@ export default function RouteDetailClient({
   const [importing, setImporting] = useState(false)
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
+  const [showAddStop, setShowAddStop] = useState(false)
+  const [newStopAddress, setNewStopAddress] = useState('')
+  const [newStopPhone, setNewStopPhone] = useState('')
+  const [newStopEmail, setNewStopEmail] = useState('')
+  const [newStopNotes, setNewStopNotes] = useState('')
+  const [addingStop, setAddingStop] = useState(false)
 
   const finished = stops.filter(s => s.status === 'finished').length
   const skipped = stops.filter(s => s.status === 'skipped').length
@@ -144,6 +150,53 @@ export default function RouteDetailClient({
     }
   }
 
+  const handleAddStop = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setAddingStop(true)
+    setError('')
+    setSuccess('')
+
+    try {
+      if (!newStopAddress.trim()) {
+        throw new Error('Address is required')
+      }
+
+      const response = await fetch('/api/admin/add-stop', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          routeId: route.id,
+          address: newStopAddress,
+          phone: newStopPhone,
+          email: newStopEmail,
+          notes: newStopNotes,
+        }),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to add stop')
+      }
+
+      setSuccess('Stop added successfully')
+      setNewStopAddress('')
+      setNewStopPhone('')
+      setNewStopEmail('')
+      setNewStopNotes('')
+      setShowAddStop(false)
+      router.refresh()
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message)
+      } else {
+        setError('Failed to add stop')
+      }
+    } finally {
+      setAddingStop(false)
+    }
+  }
+
   return (
     <div className="max-w-6xl mx-auto px-4 py-6 space-y-6">
       {/* Progress Card */}
@@ -218,6 +271,90 @@ export default function RouteDetailClient({
         <p className="text-xs text-gray-500 mt-2">
           CSV format: address (required), phone, email, notes, status, sort_order
         </p>
+      </div>
+
+      {/* Add Stop Form */}
+      <div className="card">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-lg font-semibold">Add New Stop</h2>
+          <button
+            onClick={() => setShowAddStop(!showAddStop)}
+            className="btn btn-secondary text-sm"
+          >
+            {showAddStop ? 'Cancel' : '+ Add Stop'}
+          </button>
+        </div>
+
+        {showAddStop && (
+          <form onSubmit={handleAddStop} className="space-y-4 pt-4 border-t">
+            <div>
+              <label htmlFor="address" className="block text-sm font-medium mb-1">
+                Address *
+              </label>
+              <input
+                id="address"
+                type="text"
+                value={newStopAddress}
+                onChange={(e) => setNewStopAddress(e.target.value)}
+                className="input"
+                placeholder="123 Main St, City, State ZIP"
+                required
+              />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label htmlFor="phone" className="block text-sm font-medium mb-1">
+                  Phone
+                </label>
+                <input
+                  id="phone"
+                  type="tel"
+                  value={newStopPhone}
+                  onChange={(e) => setNewStopPhone(e.target.value)}
+                  className="input"
+                  placeholder="(optional)"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium mb-1">
+                  Email
+                </label>
+                <input
+                  id="email"
+                  type="email"
+                  value={newStopEmail}
+                  onChange={(e) => setNewStopEmail(e.target.value)}
+                  className="input"
+                  placeholder="(optional)"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label htmlFor="notes" className="block text-sm font-medium mb-1">
+                Notes
+              </label>
+              <textarea
+                id="notes"
+                value={newStopNotes}
+                onChange={(e) => setNewStopNotes(e.target.value)}
+                className="input"
+                rows={3}
+                placeholder="Any additional notes..."
+              />
+            </div>
+
+            <button
+              type="submit"
+              disabled={addingStop}
+              className="btn btn-primary w-full"
+            >
+              {addingStop ? 'Adding Stop...' : 'Add Stop'}
+            </button>
+          </form>
+        )}
       </div>
 
       {/* Stops List */}
