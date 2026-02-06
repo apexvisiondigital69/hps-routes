@@ -1,5 +1,6 @@
 'use client'
 
+import { memo } from 'react'
 import CircularProgress from './CircularProgress'
 import { MapPin } from 'lucide-react'
 
@@ -11,7 +12,7 @@ interface RouteSummaryCardProps {
   onOpen: () => void
 }
 
-export default function RouteSummaryCard({
+function RouteSummaryCard({
   repName,
   completedCount,
   totalCount,
@@ -48,3 +49,5 @@ export default function RouteSummaryCard({
     </button>
   )
 }
+
+export default memo(RouteSummaryCard)

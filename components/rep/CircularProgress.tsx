@@ -1,5 +1,7 @@
 'use client'
 
+import { memo } from 'react'
+
 interface CircularProgressProps {
   completed: number
   total: number
@@ -8,7 +10,7 @@ interface CircularProgressProps {
   className?: string
 }
 
-export default function CircularProgress({
+function CircularProgress({
   completed,
   total,
   size = 80,
@@ -54,3 +56,5 @@ export default function CircularProgress({
     </div>
   )
 }
+
+export default memo(CircularProgress)

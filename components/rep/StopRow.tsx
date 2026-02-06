@@ -1,5 +1,6 @@
 'use client'
 
+import { memo } from 'react'
 import Link from 'next/link'
 import type { StopUIData } from '@/types/rep'
 import { Clock } from 'lucide-react'
@@ -8,7 +9,7 @@ interface StopRowProps {
   stop: StopUIData
 }
 
-export default function StopRow({ stop }: StopRowProps) {
+function StopRow({ stop }: StopRowProps) {
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'finished':
@@ -77,3 +78,5 @@ export default function StopRow({ stop }: StopRowProps) {
     </Link>
   )
 }
+
+export default memo(StopRow)

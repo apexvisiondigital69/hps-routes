@@ -1,14 +1,15 @@
 'use client'
 
+import Image from 'next/image'
 import type { TopAppBarProps } from '@/types/rep'
 
 export default function TopAppBar({ title, subtitle, leftAction, rightActions }: TopAppBarProps) {
   return (
     <div className="bg-[#1E88E5] text-white sticky top-0 z-20 shadow-md">
       <div className="px-4 py-3 flex items-center justify-between">
-        {/* Left action */}
+        {/* Left action or logo */}
         <div className="w-10">
-          {leftAction && (
+          {leftAction ? (
             <button
               onClick={leftAction.onClick}
               className="p-2 -ml-2 hover:bg-white/10 rounded-full transition-colors"
@@ -16,6 +17,14 @@ export default function TopAppBar({ title, subtitle, leftAction, rightActions }:
             >
               {leftAction.icon}
             </button>
+          ) : (
+            <Image
+              src="/android-chrome-512x512.png"
+              alt="HPS Routes Logo"
+              width={32}
+              height={32}
+              className="rounded-lg"
+            />
           )}
         </div>
 

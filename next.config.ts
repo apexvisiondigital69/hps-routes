@@ -6,6 +6,15 @@ const nextConfig: NextConfig = {
       bodySizeLimit: '2mb',
     },
   },
+  // Performance optimizations
+  swcMinify: true,
+  compress: true,
+  poweredByHeader: false,
+
+  // Optimize images
+  images: {
+    formats: ['image/avif', 'image/webp'],
+  },
 };
 
 export default nextConfig;

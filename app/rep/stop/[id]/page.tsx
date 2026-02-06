@@ -19,7 +19,12 @@ export default async function StopDetailPage({
   const { data: stop, error } = await supabase
     .from('stops')
     .select(`
-      *,
+      id,
+      address,
+      phone,
+      email,
+      notes,
+      status,
       routes!inner (
         rep_id
       )

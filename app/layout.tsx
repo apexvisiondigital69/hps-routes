@@ -7,6 +7,10 @@ export const metadata: Metadata = {
   manifest: "/manifest.json",
   themeColor: "#2563EB",
   viewport: "width=device-width, initial-scale=1, maximum-scale=1",
+  icons: {
+    icon: '/android-chrome-512x512.png',
+    apple: '/android-chrome-512x512.png',
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",

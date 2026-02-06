@@ -29,8 +29,15 @@ export default async function RepMapPage({
   const { data: routes } = await supabase
     .from('routes')
     .select(`
-      *,
-      stops (*)
+      id,
+      created_at,
+      stops (
+        id,
+        address,
+        status,
+        sort_order,
+        notes
+      )
     `)
     .eq('rep_id', user.id)
     .eq('route_date', selectedDate)
