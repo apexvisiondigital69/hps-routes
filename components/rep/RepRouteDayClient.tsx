@@ -8,7 +8,7 @@ import RouteProgressHeader from './RouteProgressHeader'
 import RouteActionButtons from './RouteActionButtons'
 import StopList from './StopList'
 import BottomDirectionsBar from './BottomDirectionsBar'
-import { ArrowLeft, Clipboard, Plus } from 'lucide-react'
+import { ArrowLeft } from 'lucide-react'
 import type { StopUIData } from '@/types/rep'
 
 interface RepRouteDayClientProps {
@@ -69,24 +69,6 @@ export default function RepRouteDayClient({
           onClick: handleBack,
           label: 'Back',
         }}
-        rightActions={[
-          {
-            icon: <Clipboard className="w-5 h-5" />,
-            onClick: () => {
-              // Clipboard/notes action - placeholder
-              alert('Notes - Coming soon!')
-            },
-            label: 'Notes',
-          },
-          {
-            icon: <Plus className="w-5 h-5" />,
-            onClick: () => {
-              // Add lead/stop action - placeholder
-              alert('Add lead - Coming soon!')
-            },
-            label: 'Add',
-          },
-        ]}
       />
 
       <RouteProgressHeader completed={completedCount} total={totalCount} />

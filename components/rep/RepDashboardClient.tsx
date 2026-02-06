@@ -8,7 +8,7 @@ import TopAppBar from './TopAppBar'
 import DayStrip from './DayStrip'
 import StatusBanner from './StatusBanner'
 import RouteSummaryCard from './RouteSummaryCard'
-import { Calendar, Plus, Navigation } from 'lucide-react'
+import { Navigation } from 'lucide-react'
 import type { DayInfo } from '@/types/rep'
 
 interface RepDashboardClientProps {
@@ -90,22 +90,6 @@ export default function RepDashboardClient({
       <TopAppBar
         title="Route Dashboard"
         subtitle={format(new Date(selectedDate), 'EEEE, MMMM d, yyyy')}
-        rightActions={[
-          {
-            icon: <Calendar className="w-5 h-5" />,
-            onClick: () => {
-              // Calendar action - placeholder for now
-            },
-            label: 'Calendar',
-          },
-          {
-            icon: <Plus className="w-5 h-5" />,
-            onClick: () => {
-              // Add action - placeholder for now
-            },
-            label: 'Add',
-          },
-        ]}
       />
 
       <DayStrip days={generateDays()} onSelectDay={handleSelectDay} />
