@@ -19,6 +19,7 @@ interface RepRouteDayClientProps {
   stops: StopUIData[]
   nextStopAddress: string | null
   nextStopId: string | null
+  pendingStops: { id: string; address: string }[]
 }
 
 export default function RepRouteDayClient({
@@ -29,11 +30,33 @@ export default function RepRouteDayClient({
   stops,
   nextStopAddress,
   nextStopId,
+  pendingStops,
 }: RepRouteDayClientProps) {
   const router = useRouter()
 
   const handleBack = () => {
     router.push('/rep/today')
+  }
+
+  const handleStartRoute = () => {
+    if (pendingStops.length === 0) {
+      alert('No pending stops to navigate to')
+      return
+    }
+
+    // Build Google Maps URL with all pending stops
+    if (pendingStops.length === 1) {
+      const url = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(pendingStops[0].address)}&travelmode=walking`
+      window.open(url, '_blank')
+      return
+    }
+
+    const origin = encodeURIComponent(pendingStops[0].address)
+    const destination = encodeURIComponent(pendingStops[pendingStops.length - 1].address)
+    const waypoints = pendingStops.slice(1, -1).map(s => encodeURIComponent(s.address)).join('|')
+
+    const url = `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${destination}&waypoints=${waypoints}&travelmode=walking`
+    window.open(url, '_blank')
   }
 
   return (
@@ -68,7 +91,7 @@ export default function RepRouteDayClient({
 
       <RouteProgressHeader completed={completedCount} total={totalCount} />
 
-      <RouteActionButtons />
+      <RouteActionButtons onStartRoute={pendingStops.length > 0 ? handleStartRoute : undefined} />
 
       <StopList stops={stops} />
 

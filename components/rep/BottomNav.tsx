@@ -8,6 +8,7 @@ export default function BottomNav() {
   const pathname = usePathname()
 
   const isRouteActive = pathname?.startsWith('/rep/today') || pathname?.startsWith('/rep/route')
+  const isMapActive = pathname?.startsWith('/rep/map')
 
   const tabs = [
     {
@@ -20,9 +21,9 @@ export default function BottomNav() {
     {
       label: 'Map',
       icon: Map,
-      href: '#',
-      active: false,
-      disabled: true
+      href: '/rep/map',
+      active: isMapActive,
+      disabled: false
     },
     {
       label: 'Route',

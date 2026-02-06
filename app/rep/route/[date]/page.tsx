@@ -56,6 +56,7 @@ export default async function RepRouteDayPage({
 
   // Get next pending stop
   const nextStop = allStops.find((s: any) => s.status === 'pending')
+  const pendingStops = allStops.filter((s: any) => s.status === 'pending')
 
   return (
     <RepRouteDayClient
@@ -66,6 +67,7 @@ export default async function RepRouteDayPage({
       stops={stopsUIData}
       nextStopAddress={nextStop?.address || null}
       nextStopId={nextStop?.id || null}
+      pendingStops={pendingStops.map((s: any) => ({ id: s.id, address: s.address }))}
     />
   )
 }

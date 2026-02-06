@@ -1,9 +1,9 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import { format } from 'date-fns'
-import RepDashboardClient from '@/components/rep/RepDashboardClient'
+import RepMapClient from '@/components/rep/RepMapClient'
 
-export default async function RepTodayPage({
+export default async function RepMapPage({
   searchParams,
 }: {
   searchParams: Promise<{ date?: string }>
@@ -37,19 +37,21 @@ export default async function RepTodayPage({
     .order('created_at', { ascending: true })
 
   const allStops = routes?.flatMap((r: any) => r.stops).sort((a: any, b: any) => a.sort_order - b.sort_order) || []
-  const finishedCount = allStops.filter((s: any) => s.status === 'finished').length
-  const skippedCount = allStops.filter((s: any) => s.status === 'skipped').length
-  const totalCount = allStops.length
-  const pendingStops = allStops.filter((s: any) => s.status === 'pending')
+
+  // Transform stops for map
+  const mapStops = allStops.map((stop: any, index: number) => ({
+    id: stop.id,
+    address: stop.address,
+    status: stop.status,
+    stopNumber: index + 1,
+    notes: stop.notes,
+  }))
 
   return (
-    <RepDashboardClient
-      initialDate={selectedDate}
+    <RepMapClient
+      date={selectedDate}
       repName={(profile as any)?.full_name || 'Rep'}
-      completedCount={finishedCount + skippedCount}
-      totalCount={totalCount}
-      hasStops={totalCount > 0}
-      pendingStops={pendingStops.map((s: any) => ({ id: s.id, address: s.address }))}
+      stops={mapStops}
     />
   )
 }

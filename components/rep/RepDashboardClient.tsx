@@ -8,7 +8,7 @@ import TopAppBar from './TopAppBar'
 import DayStrip from './DayStrip'
 import StatusBanner from './StatusBanner'
 import RouteSummaryCard from './RouteSummaryCard'
-import { Calendar, Plus } from 'lucide-react'
+import { Calendar, Plus, Navigation } from 'lucide-react'
 import type { DayInfo } from '@/types/rep'
 
 interface RepDashboardClientProps {
@@ -17,6 +17,7 @@ interface RepDashboardClientProps {
   completedCount: number
   totalCount: number
   hasStops: boolean
+  pendingStops: { id: string; address: string }[]
 }
 
 export default function RepDashboardClient({
@@ -25,6 +26,7 @@ export default function RepDashboardClient({
   completedCount,
   totalCount,
   hasStops,
+  pendingStops,
 }: RepDashboardClientProps) {
   const router = useRouter()
   const [selectedDate, setSelectedDate] = useState(initialDate)
@@ -60,6 +62,27 @@ export default function RepDashboardClient({
     router.push(`/rep/route/${selectedDate}`)
   }
 
+  const handleStartRoute = () => {
+    if (pendingStops.length === 0) {
+      alert('No pending stops to navigate to')
+      return
+    }
+
+    // Build Google Maps URL with all pending stops
+    if (pendingStops.length === 1) {
+      const url = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(pendingStops[0].address)}&travelmode=walking`
+      window.open(url, '_blank')
+      return
+    }
+
+    const origin = encodeURIComponent(pendingStops[0].address)
+    const destination = encodeURIComponent(pendingStops[pendingStops.length - 1].address)
+    const waypoints = pendingStops.slice(1, -1).map(s => encodeURIComponent(s.address)).join('|')
+
+    const url = `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${destination}&waypoints=${waypoints}&travelmode=walking`
+    window.open(url, '_blank')
+  }
+
   const remainingCount = totalCount - completedCount
 
   return (
@@ -91,15 +114,27 @@ export default function RepDashboardClient({
 
       <div className="p-4 space-y-4">
         {hasStops ? (
-          <RouteSummaryCard
-            repName={repName}
-            completedCount={completedCount}
-            totalCount={totalCount}
-            distanceLabel="Estimated distance: calculating..."
-            durationLabel="Estimated time: calculating..."
-            remainingCount={remainingCount}
-            onOpen={handleOpenRoute}
-          />
+          <>
+            <RouteSummaryCard
+              repName={repName}
+              completedCount={completedCount}
+              totalCount={totalCount}
+              distanceLabel="Estimated distance: calculating..."
+              durationLabel="Estimated time: calculating..."
+              remainingCount={remainingCount}
+              onOpen={handleOpenRoute}
+            />
+
+            {pendingStops.length > 0 && (
+              <button
+                onClick={handleStartRoute}
+                className="w-full ios-action-btn-primary flex items-center justify-center gap-3"
+              >
+                <Navigation className="w-6 h-6" />
+                <span className="text-lg">Start Route in Google Maps</span>
+              </button>
+            )}
+          </>
         ) : (
           <div className="card text-center text-gray-600">
             <p>No routes assigned for this date.</p>
