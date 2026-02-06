@@ -48,7 +48,7 @@ export default async function RepsManagementPage() {
           <h2 className="text-lg font-semibold mb-4">Existing Reps</h2>
           {reps && reps.length > 0 ? (
             <div className="space-y-2">
-              {reps.map((rep) => (
+              {reps.map((rep: any) => (
                 <div key={rep.id} className="card">
                   <div className="flex justify-between items-center">
                     <div>
