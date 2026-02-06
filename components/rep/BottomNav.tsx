@@ -9,14 +9,15 @@ export default function BottomNav() {
 
   const isRouteActive = pathname?.startsWith('/rep/today') || pathname?.startsWith('/rep/route')
   const isMapActive = pathname?.startsWith('/rep/map')
+  const isProfileActive = pathname?.startsWith('/rep/profile')
 
   const tabs = [
     {
       label: 'Profile',
       icon: User,
-      href: '#',
-      active: false,
-      disabled: true
+      href: '/rep/profile',
+      active: isProfileActive,
+      disabled: false
     },
     {
       label: 'Map',
