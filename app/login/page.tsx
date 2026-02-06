@@ -38,7 +38,7 @@ export default function LoginPage() {
       if (!profile) throw new Error('No profile found')
 
       // Redirect based on role
-      if (profile.role === 'admin') {
+      if ((profile as any).role === 'admin') {
         router.push('/admin')
       } else {
         router.push('/rep/today')

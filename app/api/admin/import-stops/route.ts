@@ -17,7 +17,7 @@ export async function POST(request: Request) {
       .eq('id', user.id)
       .single()
 
-    if (profile?.role !== 'admin') {
+    if ((profile as any)?.role !== 'admin') {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
     }
 
@@ -36,7 +36,7 @@ export async function POST(request: Request) {
       .limit(1)
 
     const startingSortOrder = existingStops && existingStops.length > 0
-      ? existingStops[0].sort_order + 1
+      ? (existingStops[0] as any).sort_order + 1
       : 0
 
     // Validate and transform stops
@@ -74,8 +74,8 @@ export async function POST(request: Request) {
     }
 
     // Insert stops
-    const { error: insertError } = await supabase
-      .from('stops')
+    const { error: insertError } = await (supabase
+      .from('stops') as any)
       .insert(validStops)
 
     if (insertError) {

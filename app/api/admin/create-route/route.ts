@@ -17,7 +17,7 @@ export async function POST(request: Request) {
       .eq('id', user.id)
       .single()
 
-    if (profile?.role !== 'admin') {
+    if ((profile as any)?.role !== 'admin') {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
     }
 
@@ -28,8 +28,8 @@ export async function POST(request: Request) {
     }
 
     // Create route
-    const { data: route, error: routeError } = await supabase
-      .from('routes')
+    const { data: route, error: routeError } = await (supabase
+      .from('routes') as any)
       .insert({
         rep_id: repId,
         route_date: routeDate,
@@ -51,8 +51,8 @@ export async function POST(request: Request) {
       status: 'pending',
     }))
 
-    const { error: stopsError } = await supabase
-      .from('stops')
+    const { error: stopsError } = await (supabase
+      .from('stops') as any)
       .insert(stops)
 
     if (stopsError) {

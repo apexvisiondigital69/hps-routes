@@ -25,25 +25,25 @@ export default async function RepTodayPage() {
     .eq('route_date', today)
     .order('created_at', { ascending: true })
 
-  const allStops = routes?.flatMap(r => r.stops).sort((a, b) => a.sort_order - b.sort_order) || []
-  const finishedCount = allStops.filter(s => s.status === 'finished').length
-  const skippedCount = allStops.filter(s => s.status === 'skipped').length
+  const allStops = routes?.flatMap((r: any) => r.stops).sort((a: any, b: any) => a.sort_order - b.sort_order) || []
+  const finishedCount = allStops.filter((s: any) => s.status === 'finished').length
+  const skippedCount = allStops.filter((s: any) => s.status === 'skipped').length
   const totalCount = allStops.length
 
   // Get next pending stop
-  const nextStop = allStops.find(s => s.status === 'pending')
+  const nextStop = allStops.find((s: any) => s.status === 'pending')
 
   // Build Google Maps URL for full route
   const buildFullRouteUrl = () => {
-    const pendingStops = allStops.filter(s => s.status === 'pending')
+    const pendingStops = allStops.filter((s: any) => s.status === 'pending')
     if (pendingStops.length === 0) return null
     if (pendingStops.length === 1) {
-      return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(pendingStops[0].address)}&travelmode=walking`
+      return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent((pendingStops[0] as any).address)}&travelmode=walking`
     }
 
-    const origin = encodeURIComponent(pendingStops[0].address)
-    const destination = encodeURIComponent(pendingStops[pendingStops.length - 1].address)
-    const waypoints = pendingStops.slice(1, -1).map(s => encodeURIComponent(s.address)).join('|')
+    const origin = encodeURIComponent((pendingStops[0] as any).address)
+    const destination = encodeURIComponent((pendingStops[pendingStops.length - 1] as any).address)
+    const waypoints = pendingStops.slice(1, -1).map((s: any) => encodeURIComponent(s.address)).join('|')
 
     // Google Maps has URL length limits, so check length
     const url = `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${destination}&waypoints=${waypoints}&travelmode=walking`

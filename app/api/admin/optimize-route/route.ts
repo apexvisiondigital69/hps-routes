@@ -123,7 +123,7 @@ export async function POST(request: Request) {
       .eq('id', user.id)
       .single()
 
-    if (profile?.role !== 'admin') {
+    if ((profile as any)?.role !== 'admin') {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
     }
 
@@ -145,30 +145,30 @@ export async function POST(request: Request) {
     }
 
     // Step 1: Geocode any stops that don't have lat/lng
-    const stopsToGeocode = stops.filter(s => !s.lat || !s.lng)
+    const stopsToGeocode = (stops as any[]).filter((s: any) => !s.lat || !s.lng)
 
     if (stopsToGeocode.length > 0) {
       for (const stop of stopsToGeocode) {
-        const coords = await geocodeAddress(stop.address)
+        const coords = await geocodeAddress((stop as any).address)
         if (coords) {
-          await supabase
-            .from('stops')
+          await (supabase
+            .from('stops') as any)
             .update({
               lat: coords.lat,
               lng: coords.lng,
               geocode_provider: 'google',
               geocoded_at: new Date().toISOString(),
             })
-            .eq('id', stop.id)
+            .eq('id', (stop as any).id)
 
-          stop.lat = coords.lat
-          stop.lng = coords.lng
+          ;(stop as any).lat = coords.lat
+          ;(stop as any).lng = coords.lng
         }
       }
     }
 
     // Filter stops that have coordinates
-    const geocodedStops = stops.filter(s => s.lat && s.lng) as {
+    const geocodedStops = (stops as any[]).filter((s: any) => s.lat && s.lng) as {
       id: string
       address: string
       lat: number
@@ -206,15 +206,15 @@ export async function POST(request: Request) {
     }))
 
     for (const update of updates) {
-      await supabase
-        .from('stops')
+      await (supabase
+        .from('stops') as any)
         .update({ sort_order: update.sort_order })
         .eq('id', update.id)
     }
 
     // Update route's last_optimized_at
-    await supabase
-      .from('routes')
+    await (supabase
+      .from('routes') as any)
       .update({ last_optimized_at: new Date().toISOString() })
       .eq('id', routeId)
 

@@ -25,8 +25,8 @@ export default function StopDetailClient({ stop }: { stop: Stop }) {
 
     try {
       console.log('Attempting to update stop:', stop.id, 'with status:', newStatus)
-      const { error: updateError } = await supabase
-        .from('stops')
+      const { error: updateError } = await (supabase
+        .from('stops') as any)
         .update({
           phone: phone.trim() || null,
           email: email.trim() || null,

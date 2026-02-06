@@ -48,7 +48,7 @@ export default async function RoutesListPage() {
       <div className="max-w-6xl mx-auto px-4 py-6">
         {routes && routes.length > 0 ? (
           <div className="space-y-3">
-            {routes.map((route) => {
+            {routes.map((route: any) => {
               const stops = route.stops || []
               const finished = stops.filter((s: { status: string }) => s.status === 'finished').length
               const skipped = stops.filter((s: { status: string }) => s.status === 'skipped').length

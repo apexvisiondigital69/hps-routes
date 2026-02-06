@@ -17,7 +17,7 @@ export async function POST(request: Request) {
       .eq('id', user.id)
       .single()
 
-    if (profile?.role !== 'admin') {
+    if ((profile as any)?.role !== 'admin') {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
     }
 
@@ -40,8 +40,8 @@ export async function POST(request: Request) {
     }
 
     // Create profile
-    const { error: profileError } = await supabase
-      .from('profiles')
+    const { error: profileError } = await (supabase
+      .from('profiles') as any)
       .insert({
         id: authData.user.id,
         role: 'rep',

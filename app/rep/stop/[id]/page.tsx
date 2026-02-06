@@ -27,9 +27,9 @@ export default async function StopDetailPage({
     .eq('id', id)
     .single()
 
-  if (error || !stop || stop.routes.rep_id !== user.id) {
+  if (error || !stop || (stop as any).routes.rep_id !== user.id) {
     redirect('/rep/today')
   }
 
-  return <StopDetailClient stop={stop} />
+  return <StopDetailClient stop={stop as any} />
 }
