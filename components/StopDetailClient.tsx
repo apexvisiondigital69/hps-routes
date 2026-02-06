@@ -6,7 +6,7 @@ import { createClient } from '@/lib/supabase/client'
 import type { Stop } from '@/types'
 import RepAppShell from './rep/RepAppShell'
 import TopAppBar from './rep/TopAppBar'
-import { ArrowLeft, Navigation, Phone, MessageCircle, CheckCircle, XCircle, Save } from 'lucide-react'
+import { ArrowLeft, Navigation, Phone, MessageSquare, CheckCircle, XCircle, Save } from 'lucide-react'
 
 export default function StopDetailClient({ stop }: { stop: Stop }) {
   const router = useRouter()
@@ -71,10 +71,9 @@ export default function StopDetailClient({ stop }: { stop: Stop }) {
     }
   }
 
-  const handleWhatsApp = () => {
+  const handleMessage = () => {
     if (phone) {
-      const cleanPhone = phone.replace(/\D/g, '')
-      window.open(`https://wa.me/${cleanPhone}`, '_blank')
+      window.location.href = `sms:${phone}`
     } else {
       alert('No phone number available')
     }
@@ -152,11 +151,11 @@ export default function StopDetailClient({ stop }: { stop: Stop }) {
             </button>
 
             <button
-              onClick={handleWhatsApp}
-              className="flex flex-col items-center gap-2 p-4 rounded-xl border-2 border-gray-200 hover:border-green-500 hover:bg-green-50 transition-all active:scale-95"
+              onClick={handleMessage}
+              className="flex flex-col items-center gap-2 p-4 rounded-xl border-2 border-gray-200 hover:border-[#1E88E5] hover:bg-blue-50 transition-all active:scale-95"
             >
-              <MessageCircle className="w-6 h-6 text-green-600" />
-              <span className="text-xs font-medium text-gray-700">WhatsApp</span>
+              <MessageSquare className="w-6 h-6 text-[#1E88E5]" />
+              <span className="text-xs font-medium text-gray-700">Message</span>
             </button>
 
             <button
