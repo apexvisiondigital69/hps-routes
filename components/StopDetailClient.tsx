@@ -18,27 +18,34 @@ export default function StopDetailClient({ stop }: { stop: Stop }) {
 
   const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(stop.address)}&travelmode=walking`
 
-  const handleSave = async () => {
+  const handleSave = async (newStatus: string) => {
+    console.log('handleSave called! Current status:', newStatus)
     setSaving(true)
     setError('')
 
     try {
+      console.log('Attempting to update stop:', stop.id, 'with status:', newStatus)
       const { error: updateError } = await supabase
         .from('stops')
         .update({
           phone: phone.trim() || null,
           email: email.trim() || null,
           notes: notes.trim() || null,
-          status,
-          completed_at: status !== 'pending' ? new Date().toISOString() : null,
+          status: newStatus,
+          completed_at: newStatus !== 'pending' ? new Date().toISOString() : null,
         })
         .eq('id', stop.id)
 
-      if (updateError) throw updateError
+      if (updateError) {
+        console.error('Update error:', updateError)
+        throw updateError
+      }
 
+      console.log('Update successful! Redirecting...')
       router.push('/rep/today')
       router.refresh()
     } catch (err: unknown) {
+      console.error('Caught error:', err)
       if (err instanceof Error) {
         setError(err.message)
       } else {
@@ -50,15 +57,14 @@ export default function StopDetailClient({ stop }: { stop: Stop }) {
   }
 
   const handleMarkFinished = async () => {
+    console.log('Mark Finished clicked!')
     setStatus('finished')
-    await new Promise(resolve => setTimeout(resolve, 100))
-    await handleSave()
+    await handleSave('finished')
   }
 
   const handleMarkSkipped = async () => {
     setStatus('skipped')
-    await new Promise(resolve => setTimeout(resolve, 100))
-    await handleSave()
+    await handleSave('skipped')
   }
 
   return (
@@ -167,7 +173,7 @@ export default function StopDetailClient({ stop }: { stop: Stop }) {
           </button>
 
           <button
-            onClick={handleSave}
+            onClick={() => handleSave(status)}
             disabled={saving}
             className="btn btn-secondary w-full"
           >

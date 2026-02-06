@@ -31,7 +31,7 @@ export default async function AdminDashboard() {
     `)
     .eq('route_date', today)
 
-  const routeStats = todaysRoutes?.map(route => {
+  const routeStats = todaysRoutes?.map((route: any) => {
     const stops = route.stops || []
     const finished = stops.filter((s: { status: string }) => s.status === 'finished').length
     const skipped = stops.filter((s: { status: string }) => s.status === 'skipped').length
