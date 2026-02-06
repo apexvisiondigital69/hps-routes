@@ -1,12 +1,13 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import { format } from 'date-fns'
-import RepDashboardClient from '@/components/rep/RepDashboardClient'
+import RepRouteDayClient from '@/components/rep/RepRouteDayClient'
+import type { StopUIData } from '@/types/rep'
 
-export default async function RepTodayPage({
-  searchParams,
+export default async function RepRouteDayPage({
+  params,
 }: {
-  searchParams: Promise<{ date?: string }>
+  params: Promise<{ date: string }>
 }) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
@@ -15,15 +16,14 @@ export default async function RepTodayPage({
     redirect('/login')
   }
 
+  const { date } = await params
+
   // Get rep profile for name
   const { data: profile } = await supabase
     .from('profiles')
     .select('full_name')
     .eq('id', user.id)
     .single()
-
-  const params = await searchParams
-  const selectedDate = params.date || format(new Date(), 'yyyy-MM-dd')
 
   // Fetch routes for the selected date
   const { data: routes } = await supabase
@@ -33,21 +33,39 @@ export default async function RepTodayPage({
       stops (*)
     `)
     .eq('rep_id', user.id)
-    .eq('route_date', selectedDate)
+    .eq('route_date', date)
     .order('created_at', { ascending: true })
 
   const allStops = routes?.flatMap((r: any) => r.stops).sort((a: any, b: any) => a.sort_order - b.sort_order) || []
   const finishedCount = allStops.filter((s: any) => s.status === 'finished').length
   const skippedCount = allStops.filter((s: any) => s.status === 'skipped').length
   const totalCount = allStops.length
+  const completedCount = finishedCount + skippedCount
+
+  // Transform stops to UI data
+  const stopsUIData: StopUIData[] = allStops.map((stop: any, index: number) => ({
+    id: stop.id,
+    stopNumber: index + 1,
+    status: stop.status,
+    primaryLabel: stop.address,
+    secondaryLabel: stop.notes || 'No additional details',
+    tag: undefined,
+    etaLabel: undefined,
+    metaRight: undefined,
+  }))
+
+  // Get next pending stop
+  const nextStop = allStops.find((s: any) => s.status === 'pending')
 
   return (
-    <RepDashboardClient
-      initialDate={selectedDate}
+    <RepRouteDayClient
+      date={date}
       repName={(profile as any)?.full_name || 'Rep'}
-      completedCount={finishedCount + skippedCount}
+      completedCount={completedCount}
       totalCount={totalCount}
-      hasStops={totalCount > 0}
+      stops={stopsUIData}
+      nextStopAddress={nextStop?.address || null}
+      nextStopId={nextStop?.id || null}
     />
   )
 }

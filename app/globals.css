@@ -56,4 +56,69 @@
   .status-skipped {
     @apply bg-skipped;
   }
+
+  /* iOS-style components */
+  .ios-action-btn {
+    @apply min-h-[44px] px-6 py-3 rounded-xl font-semibold text-base transition-all duration-200 active:scale-95;
+  }
+
+  .ios-action-btn-primary {
+    @apply ios-action-btn bg-[#43A047] text-white hover:bg-[#388E3C] active:bg-[#2E7D32];
+  }
+
+  .ios-action-btn-secondary {
+    @apply ios-action-btn bg-[#1E88E5] text-white hover:bg-[#1976D2] active:bg-[#1565C0];
+  }
+
+  .ios-action-btn-outline {
+    @apply ios-action-btn border-2 border-[#1E88E5] text-[#1E88E5] hover:bg-blue-50 active:bg-blue-100;
+  }
+
+  .ios-day-pill {
+    @apply px-3 py-2 rounded-full text-center transition-all duration-200 cursor-pointer;
+  }
+
+  .ios-day-pill-selected {
+    @apply bg-[#43A047] text-white font-semibold shadow-md;
+  }
+
+  .ios-day-pill-unselected {
+    @apply bg-gray-100 text-gray-700 hover:bg-gray-200;
+  }
+
+  .ios-day-pill-today {
+    @apply bg-blue-50 text-[#1E88E5] font-medium hover:bg-blue-100;
+  }
+
+  .ios-progress-bar {
+    @apply w-full h-2 bg-gray-200 rounded-full overflow-hidden;
+  }
+
+  .ios-progress-bar-fill {
+    @apply h-full bg-[#43A047] transition-all duration-300 rounded-full;
+  }
+
+  .ios-stop-row {
+    @apply relative bg-white rounded-2xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-200 overflow-hidden cursor-pointer active:bg-gray-50;
+  }
+
+  .ios-stop-number-badge {
+    @apply absolute left-0 top-0 bottom-0 w-10 flex items-center justify-center text-white font-bold text-sm;
+  }
+
+  .ios-tag-pill {
+    @apply px-2 py-0.5 rounded-full text-xs font-medium inline-block;
+  }
+
+  .ios-tag-custom {
+    @apply ios-tag-pill bg-purple-100 text-purple-700;
+  }
+
+  .ios-tag-priority {
+    @apply ios-tag-pill bg-red-100 text-red-700;
+  }
+
+  .ios-tag-followup {
+    @apply ios-tag-pill bg-blue-100 text-blue-700;
+  }
 }
