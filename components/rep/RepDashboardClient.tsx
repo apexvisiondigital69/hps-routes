@@ -119,8 +119,6 @@ export default function RepDashboardClient({
               repName={repName}
               completedCount={completedCount}
               totalCount={totalCount}
-              distanceLabel="Estimated distance: calculating..."
-              durationLabel="Estimated time: calculating..."
               remainingCount={remainingCount}
               onOpen={handleOpenRoute}
             />
