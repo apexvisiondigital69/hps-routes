@@ -1,6 +1,6 @@
 'use client'
 
-import { User, Map, Route as RouteIcon, List, Settings } from 'lucide-react'
+import { User, Route as RouteIcon } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
@@ -8,7 +8,6 @@ export default function BottomNav() {
   const pathname = usePathname()
 
   const isRouteActive = pathname?.startsWith('/rep/today') || pathname?.startsWith('/rep/route')
-  const isMapActive = pathname?.startsWith('/rep/map')
   const isProfileActive = pathname?.startsWith('/rep/profile')
 
   const tabs = [
@@ -20,32 +19,11 @@ export default function BottomNav() {
       disabled: false
     },
     {
-      label: 'Map',
-      icon: Map,
-      href: '/rep/map',
-      active: isMapActive,
-      disabled: false
-    },
-    {
       label: 'Route',
       icon: RouteIcon,
       href: '/rep/today',
       active: isRouteActive,
       disabled: false
-    },
-    {
-      label: 'List',
-      icon: List,
-      href: '#',
-      active: false,
-      disabled: true
-    },
-    {
-      label: 'Settings',
-      icon: Settings,
-      href: '#',
-      active: false,
-      disabled: true
     },
   ]
 
