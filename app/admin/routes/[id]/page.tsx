@@ -33,7 +33,8 @@ export default async function RouteDetailPage({
     redirect('/admin/routes')
   }
 
-  const stops = ((route as any).stops || []).sort((a: { sort_order: number }, b: { sort_order: number }) => a.sort_order - b.sort_order)
+  const typedRoute = route as any
+  const stops = (typedRoute.stops || []).sort((a: { sort_order: number }, b: { sort_order: number }) => a.sort_order - b.sort_order)
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -47,10 +48,10 @@ export default async function RouteDetailPage({
               </Link>
               <div>
                 <h1 className="text-2xl font-bold">
-                  {route.title || 'Untitled Route'}
+                  {typedRoute.title || 'Untitled Route'}
                 </h1>
                 <p className="text-sm text-gray-600">
-                  {route.profiles?.full_name} • {format(new Date(route.route_date), 'MMM d, yyyy')}
+                  {typedRoute.profiles?.full_name} • {format(new Date(typedRoute.route_date), 'MMM d, yyyy')}
                 </p>
               </div>
             </div>
@@ -59,7 +60,7 @@ export default async function RouteDetailPage({
         </div>
       </div>
 
-      <RouteDetailClient route={route} stops={stops} />
+      <RouteDetailClient route={typedRoute} stops={stops} />
     </div>
   )
 }
