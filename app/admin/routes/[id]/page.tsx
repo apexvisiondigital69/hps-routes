@@ -33,7 +33,7 @@ export default async function RouteDetailPage({
     redirect('/admin/routes')
   }
 
-  const stops = (route.stops || []).sort((a: { sort_order: number }, b: { sort_order: number }) => a.sort_order - b.sort_order)
+  const stops = ((route as any).stops || []).sort((a: { sort_order: number }, b: { sort_order: number }) => a.sort_order - b.sort_order)
 
   return (
     <div className="min-h-screen bg-gray-50">
