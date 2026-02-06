@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import type { Route, Stop } from '@/types'
 import Papa from 'papaparse'
 
@@ -179,7 +180,14 @@ export default function RouteDetailClient({
           </div>
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
+          <Link
+            href={`/admin/routes/${route.id}/edit`}
+            className="btn btn-secondary"
+          >
+            Edit Route
+          </Link>
+
           <button
             onClick={handleOptimizeRoute}
             disabled={optimizing}
