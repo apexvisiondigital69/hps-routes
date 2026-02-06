@@ -7,8 +7,6 @@ const nextConfig: NextConfig = {
     },
   },
   // Performance optimizations
-  swcMinify: true,
-  compress: true,
   poweredByHeader: false,
 
   // Optimize images
