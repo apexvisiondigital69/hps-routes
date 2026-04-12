@@ -1,0 +1,7 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "installCommand": "cd chess-site && npm ci",
+  "buildCommand": "cd chess-site && npm run build",
+  "outputDirectory": "chess-site/.next",
+  "framework": "nextjs"
+}
