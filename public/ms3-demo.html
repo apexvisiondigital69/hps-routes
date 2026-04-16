@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>MS3 Learning Plan — Interactive Demo</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  .card-flip { transform-style: preserve-3d; transition: transform .5s; }
+  .card-flip.flipped { transform: rotateY(180deg); }
+  .card-face { backface-visibility: hidden; }
+  .card-back { transform: rotateY(180deg); }
+  .heat-0 { background: #f1f5f9; }
+  .heat-1 { background: #fecaca; }
+  .heat-2 { background: #fed7aa; }
+  .heat-3 { background: #fde68a; }
+  .heat-4 { background: #bbf7d0; }
+  .heat-5 { background: #86efac; }
+  .fade-in { animation: fade .3s ease-out; }
+  @keyframes fade { from { opacity: 0; transform: translateY(4px);} to {opacity:1; transform: none;} }
+  .typing::after { content: "▋"; animation: blink 1s steps(2) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+</style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen">
+
+<div class="max-w-6xl mx-auto p-6">
+
+  <!-- Header -->
+  <header class="flex items-center justify-between mb-6">
+    <div>
+      <h1 class="text-2xl font-bold text-slate-900">MS3 Learning Plan</h1>
+      <p class="text-sm text-slate-500">Week 3 · Internal Medicine rotation · Day 14 streak 🔥</p>
+    </div>
+    <div class="flex items-center gap-2">
+      <select id="rotation" class="bg-white border border-slate-200 rounded-lg px-3 py-2 text-sm">
+        <option>Internal Medicine</option>
+        <option>Surgery</option>
+        <option>Pediatrics</option>
+        <option>OB/GYN</option>
+        <option>Psychiatry</option>
+        <option>Family Medicine</option>
+      </select>
+    </div>
+  </header>
+
+  <!-- Tabs -->
+  <nav class="flex gap-1 mb-5 bg-white p-1 rounded-xl shadow-sm w-fit">
+    <button data-tab="today" class="tab-btn px-4 py-2 rounded-lg text-sm font-medium bg-slate-900 text-white">Today</button>
+    <button data-tab="cards" class="tab-btn px-4 py-2 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100">Flashcards</button>
+    <button data-tab="case" class="tab-btn px-4 py-2 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100">Case with Claude</button>
+    <button data-tab="mastery" class="tab-btn px-4 py-2 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100">Mastery</button>
+    <button data-tab="week" class="tab-btn px-4 py-2 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100">Week</button>
+  </nav>
+
+  <!-- TODAY -->
+  <section id="tab-today" class="tab-panel">
+    <div class="grid md:grid-cols-3 gap-4">
+      <div class="bg-white rounded-2xl p-5 shadow-sm col-span-2">
+        <h2 class="font-semibold mb-3">Today's plan · Apr 16</h2>
+        <ol class="space-y-3">
+          <li class="flex items-start gap-3 p-3 rounded-lg border border-slate-100">
+            <span class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-sm">✓</span>
+            <div class="flex-1">
+              <div class="font-medium">Pre-round warmup · 5 min</div>
+              <div class="text-sm text-slate-500">3 questions on DKA management before rounds</div>
+            </div>
+            <span class="text-xs text-emerald-600">Done 6:42 AM</span>
+          </li>
+          <li class="flex items-start gap-3 p-3 rounded-lg border border-slate-100 bg-amber-50">
+            <span class="w-8 h-8 rounded-full bg-amber-200 text-amber-800 flex items-center justify-center text-sm">●</span>
+            <div class="flex-1">
+              <div class="font-medium">Midday flashcard drill · 15 min</div>
+              <div class="text-sm text-slate-500">12 cards due · heart failure, AKI, anticoagulation</div>
+            </div>
+            <button onclick="go('cards')" class="text-sm bg-slate-900 text-white px-3 py-1.5 rounded-lg">Start</button>
+          </li>
+          <li class="flex items-start gap-3 p-3 rounded-lg border border-slate-100">
+            <span class="w-8 h-8 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center text-sm">○</span>
+            <div class="flex-1">
+              <div class="font-medium">Evening case review with Claude · 15 min</div>
+              <div class="text-sm text-slate-500">Describe a patient; get quizzed on ddx, workup, trial</div>
+            </div>
+            <button onclick="go('case')" class="text-sm border border-slate-300 px-3 py-1.5 rounded-lg">Open</button>
+          </li>
+          <li class="flex items-start gap-3 p-3 rounded-lg border border-slate-100">
+            <span class="w-8 h-8 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center text-sm">○</span>
+            <div class="flex-1">
+              <div class="font-medium">Teach-back: "Explain NSTEMI to a skeptical attending" · 5 min</div>
+              <div class="text-sm text-slate-500">Claude plays attending, pushes back on your reasoning</div>
+            </div>
+          </li>
+        </ol>
+      </div>
+
+      <div class="bg-white rounded-2xl p-5 shadow-sm">
+        <h2 class="font-semibold mb-3">Progress</h2>
+        <div class="space-y-4 text-sm">
+          <div>
+            <div class="flex justify-between mb-1"><span>Today</span><span class="text-slate-500">25 / 45 min</span></div>
+            <div class="h-2 bg-slate-100 rounded-full"><div class="h-2 bg-emerald-500 rounded-full" style="width:56%"></div></div>
+          </div>
+          <div>
+            <div class="flex justify-between mb-1"><span>IM shelf coverage</span><span class="text-slate-500">62%</span></div>
+            <div class="h-2 bg-slate-100 rounded-full"><div class="h-2 bg-blue-500 rounded-full" style="width:62%"></div></div>
+          </div>
+          <div>
+            <div class="flex justify-between mb-1"><span>Due cards</span><span class="text-slate-500">12</span></div>
+            <div class="h-2 bg-slate-100 rounded-full"><div class="h-2 bg-amber-500 rounded-full" style="width:30%"></div></div>
+          </div>
+          <div class="pt-3 border-t border-slate-100">
+            <div class="text-xs text-slate-500 mb-1">Current weakness</div>
+            <div class="font-medium text-rose-700">Acid-base disorders</div>
+            <div class="text-xs text-slate-500">3 wrong in last 5 attempts — tomorrow's drill will focus here</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FLASHCARDS -->
+  <section id="tab-cards" class="tab-panel hidden">
+    <div class="bg-white rounded-2xl p-6 shadow-sm max-w-2xl mx-auto">
+      <div class="flex justify-between items-center mb-4 text-sm text-slate-500">
+        <span>Card <span id="cardIdx">1</span> of <span id="cardTotal">5</span></span>
+        <span>Topic: <span id="cardTopic" class="font-medium text-slate-700">Heart Failure</span></span>
+      </div>
+
+      <div class="relative h-64 perspective" style="perspective:1000px;">
+        <div id="card" class="card-flip relative w-full h-full cursor-pointer" onclick="flip()">
+          <div id="cardFront" class="card-face absolute inset-0 bg-gradient-to-br from-sky-50 to-indigo-50 border border-slate-200 rounded-xl p-6 flex items-center justify-center text-center">
+            <div>
+              <div class="text-xs uppercase tracking-wider text-slate-400 mb-3">Question</div>
+              <div id="qText" class="text-lg font-medium text-slate-900"></div>
+              <div class="text-xs text-slate-400 mt-6">Click to reveal</div>
+            </div>
+          </div>
+          <div id="cardBack" class="card-face card-back absolute inset-0 bg-gradient-to-br from-emerald-50 to-teal-50 border border-slate-200 rounded-xl p-6 flex items-center justify-center text-center">
+            <div>
+              <div class="text-xs uppercase tracking-wider text-emerald-600 mb-3">Answer</div>
+              <div id="aText" class="text-base text-slate-900"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="rateRow" class="mt-5 grid grid-cols-4 gap-2 opacity-0 pointer-events-none transition">
+        <button onclick="rate(0)" class="bg-rose-100 text-rose-700 py-2 rounded-lg text-sm font-medium hover:bg-rose-200">Again</button>
+        <button onclick="rate(1)" class="bg-amber-100 text-amber-700 py-2 rounded-lg text-sm font-medium hover:bg-amber-200">Hard</button>
+        <button onclick="rate(2)" class="bg-sky-100 text-sky-700 py-2 rounded-lg text-sm font-medium hover:bg-sky-200">Good</button>
+        <button onclick="rate(3)" class="bg-emerald-100 text-emerald-700 py-2 rounded-lg text-sm font-medium hover:bg-emerald-200">Easy</button>
+      </div>
+
+      <div class="mt-4 text-xs text-slate-400 text-center">Claude re-schedules based on your rating (SM-2 spaced repetition)</div>
+    </div>
+  </section>
+
+  <!-- CASE -->
+  <section id="tab-case" class="tab-panel hidden">
+    <div class="bg-white rounded-2xl shadow-sm max-w-3xl mx-auto overflow-hidden">
+      <div class="p-4 border-b border-slate-100 flex items-center gap-3">
+        <div class="w-9 h-9 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold text-sm">C</div>
+        <div>
+          <div class="font-semibold">Claude · Case tutor mode</div>
+          <div class="text-xs text-slate-500">IM rotation · adapts to your shelf weaknesses</div>
+        </div>
+      </div>
+      <div id="chat" class="p-4 space-y-3 h-96 overflow-y-auto"></div>
+      <div class="p-3 border-t border-slate-100 flex gap-2">
+        <input id="chatInput" class="flex-1 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm" placeholder="Describe a patient or type an answer..." />
+        <button onclick="sendChat()" class="bg-slate-900 text-white px-4 py-2 rounded-lg text-sm">Send</button>
+      </div>
+      <div class="px-3 pb-3 flex gap-2 flex-wrap">
+        <button onclick="quick('58F, crushing chest pain, trop 0.8')" class="text-xs bg-slate-100 hover:bg-slate-200 px-3 py-1 rounded-full">Quick case: chest pain</button>
+        <button onclick="quick('Ran out of ideas for ddx')" class="text-xs bg-slate-100 hover:bg-slate-200 px-3 py-1 rounded-full">Help with ddx</button>
+        <button onclick="quick('Quiz me on trials')" class="text-xs bg-slate-100 hover:bg-slate-200 px-3 py-1 rounded-full">Landmark trial drill</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- MASTERY -->
+  <section id="tab-mastery" class="tab-panel hidden">
+    <div class="bg-white rounded-2xl p-6 shadow-sm">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="font-semibold">IM shelf · topic mastery heatmap</h2>
+        <div class="flex items-center gap-2 text-xs text-slate-500">
+          <span>Weak</span>
+          <span class="w-4 h-4 rounded heat-1"></span>
+          <span class="w-4 h-4 rounded heat-2"></span>
+          <span class="w-4 h-4 rounded heat-3"></span>
+          <span class="w-4 h-4 rounded heat-4"></span>
+          <span class="w-4 h-4 rounded heat-5"></span>
+          <span>Strong</span>
+        </div>
+      </div>
+      <div id="heatmap" class="grid grid-cols-2 md:grid-cols-4 gap-2 text-sm"></div>
+      <div class="mt-5 text-xs text-slate-500 border-t border-slate-100 pt-3">
+        Tomorrow's drill auto-selects the 3 lowest-scoring topics.
+      </div>
+    </div>
+  </section>
+
+  <!-- WEEK -->
+  <section id="tab-week" class="tab-panel hidden">
+    <div class="bg-white rounded-2xl p-6 shadow-sm">
+      <h2 class="font-semibold mb-4">This week</h2>
+      <div class="grid grid-cols-7 gap-2 text-center text-xs" id="week"></div>
+      <div class="mt-6">
+        <h3 class="font-semibold mb-2 text-sm">Upcoming</h3>
+        <ul class="text-sm space-y-2 text-slate-700">
+          <li class="flex justify-between border-b border-slate-100 py-2"><span>Sat · Mock oral exam — HF + AKI</span><span class="text-slate-500">30 min</span></li>
+          <li class="flex justify-between border-b border-slate-100 py-2"><span>Sun · Spaced review (47 cards)</span><span class="text-slate-500">25 min</span></li>
+          <li class="flex justify-between py-2"><span>Mon · Teach-back: "Present a CHF exacerbation"</span><span class="text-slate-500">10 min</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+// --- Tabs ---
+function go(id){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.add('hidden'));
+  document.getElementById('tab-'+id).classList.remove('hidden');
+  document.querySelectorAll('.tab-btn').forEach(b=>{
+    const active = b.dataset.tab===id;
+    b.className = 'tab-btn px-4 py-2 rounded-lg text-sm font-medium ' +
+      (active ? 'bg-slate-900 text-white' : 'text-slate-600 hover:bg-slate-100');
+  });
+}
+document.querySelectorAll('.tab-btn').forEach(b=>b.addEventListener('click',()=>go(b.dataset.tab)));
+
+// --- Flashcards ---
+const deck = [
+  {topic:'Heart Failure', q:'First-line meds for HFrEF that reduce mortality?', a:'ARNI (or ACEi/ARB) + beta-blocker + MRA + SGLT2i — the "four pillars".'},
+  {topic:'AKI', q:'FENa in pre-renal vs intrinsic AKI?', a:'Pre-renal: <1%. Intrinsic (ATN): >2%. Caveat: unreliable on diuretics — use FEurea (<35% = pre-renal).'},
+  {topic:'Anticoag', q:'When to bridge warfarin peri-op?', a:'Only high-risk: mechanical mitral valve, recent VTE (<3mo), CHA2DS2-VASc ≥7, or stroke <3mo.'},
+  {topic:'Acid-base', q:'Winter\'s formula for expected PCO2 in metabolic acidosis?', a:'PCO2 = 1.5(HCO3) + 8 ± 2. Higher = concurrent respiratory acidosis; lower = concurrent respiratory alkalosis.'},
+  {topic:'ACS', q:'STEMI door-to-balloon goal?', a:'≤90 min if PCI-capable; ≤120 min if transfer. Give ASA 325 + P2Y12 + anticoag + statin upfront.'}
+];
+let cardI = 0;
+function renderCard(){
+  const c = deck[cardI];
+  document.getElementById('cardIdx').textContent = cardI+1;
+  document.getElementById('cardTotal').textContent = deck.length;
+  document.getElementById('cardTopic').textContent = c.topic;
+  document.getElementById('qText').textContent = c.q;
+  document.getElementById('aText').textContent = c.a;
+  document.getElementById('card').classList.remove('flipped');
+  document.getElementById('rateRow').classList.add('opacity-0','pointer-events-none');
+}
+function flip(){
+  document.getElementById('card').classList.toggle('flipped');
+  document.getElementById('rateRow').classList.remove('opacity-0','pointer-events-none');
+}
+function rate(n){
+  cardI = (cardI+1) % deck.length;
+  renderCard();
+}
+renderCard();
+
+// --- Case chat (simulated Claude) ---
+const chat = document.getElementById('chat');
+function bubble(who, text, delay=0){
+  const isClaude = who==='claude';
+  const div = document.createElement('div');
+  div.className = 'flex ' + (isClaude?'':'justify-end') + ' fade-in';
+  div.innerHTML = `
+    <div class="max-w-[80%] ${isClaude?'bg-slate-100 text-slate-900':'bg-slate-900 text-white'} rounded-2xl px-4 py-2 text-sm whitespace-pre-wrap">${text}</div>`;
+  setTimeout(()=>{ chat.appendChild(div); chat.scrollTop = chat.scrollHeight; }, delay);
+}
+function claudeReply(text){
+  const typing = document.createElement('div');
+  typing.className = 'flex fade-in';
+  typing.innerHTML = `<div class="bg-slate-100 rounded-2xl px-4 py-2 text-sm typing">&nbsp;</div>`;
+  chat.appendChild(typing); chat.scrollTop = chat.scrollHeight;
+  setTimeout(()=>{ typing.remove(); bubble('claude', text); }, 900);
+}
+function sendChat(){
+  const input = document.getElementById('chatInput');
+  const t = input.value.trim(); if(!t) return;
+  input.value='';
+  bubble('you', t);
+  const lower = t.toLowerCase();
+  let reply;
+  if(lower.includes('chest pain') || lower.includes('trop')){
+    reply = "Solid. Quick triage — ECG first. STEMI vs NSTEMI hinges on what exactly?\n\nAnd with trop 0.8, what's your door-to-cath target if ST elevations are present?";
+  } else if(lower.includes('ddx')){
+    reply = "Let's structure it. For acute chest pain think VINDICATE or by lethality:\n• Can't-miss: ACS, PE, aortic dissection, tamponade, tension PTX, esophageal rupture\n• Common: GERD, MSK, anxiety, pericarditis\n\nWhich two would you rule out first and with what test?";
+  } else if(lower.includes('trial')){
+    reply = "Landmark rapid-fire. Name the trial:\n\n1) Empagliflozin → CV mortality benefit in T2DM. Trial?\n2) Sacubitril/valsartan vs enalapril in HFrEF. Trial?\n3) Rivaroxaban vs warfarin in nonvalvular AF. Trial?";
+  } else if(lower.match(/stemi|90|120/)){
+    reply = "Right — ≤90 min door-to-balloon if PCI-capable, ≤120 if transfer.\n\nOne more: posterior MI sneaks past standard leads. When would you add V7–V9?";
+  } else {
+    reply = "Tell me more. Age, vitals, key exam finding, and one lab that stood out. I'll build the ddx with you.";
+  }
+  claudeReply(reply);
+}
+function quick(t){ document.getElementById('chatInput').value = t; sendChat(); }
+// seed
+bubble('claude', "Hey — evening case review. Got a patient you want to workshop, or want me to quiz you?");
+
+// --- Mastery heatmap ---
+const topics = [
+  ['Heart Failure',4],['ACS',5],['Arrhythmia',3],['HTN',5],
+  ['COPD/Asthma',4],['Pneumonia',5],['PE',3],['AKI',3],
+  ['CKD',2],['Electrolytes',2],['Acid-base',1],['DM/DKA',4],
+  ['Thyroid',3],['Anemia',4],['GI bleed',3],['Cirrhosis',2],
+  ['Stroke',4],['Sepsis',5],['Anticoag',3],['Rheum',2]
+];
+const hm = document.getElementById('heatmap');
+topics.forEach(([name,score])=>{
+  const el = document.createElement('div');
+  el.className = `heat-${score} rounded-lg p-3 flex justify-between items-center`;
+  el.innerHTML = `<span class="font-medium">${name}</span><span class="text-xs text-slate-600">${score}/5</span>`;
+  hm.appendChild(el);
+});
+
+// --- Week grid ---
+const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+const loads = [45,30,50,40,35,60,25];
+const done  = [45,30,50,40,25, 0, 0];
+const weekEl = document.getElementById('week');
+days.forEach((d,i)=>{
+  const pct = Math.round(done[i]/loads[i]*100);
+  const cell = document.createElement('div');
+  cell.className = 'p-3 rounded-xl border border-slate-100';
+  cell.innerHTML = `
+    <div class="font-semibold text-slate-500">${d}</div>
+    <div class="text-lg font-bold mt-1">${done[i]}<span class="text-xs text-slate-400">/${loads[i]}m</span></div>
+    <div class="h-1.5 bg-slate-100 rounded-full mt-2"><div class="h-1.5 ${pct===100?'bg-emerald-500':'bg-amber-400'} rounded-full" style="width:${pct}%"></div></div>
+  `;
+  weekEl.appendChild(cell);
+});
+</script>
+</body>
+</html>
