@@ -6,14 +6,14 @@
     <title>Online Quran Academy — Private Quran &amp; Arabic Classes</title>
     <meta
       name="description"
-      content="Private 1-on-1 Quran and Arabic classes on Zoom with qualified Egyptian teachers. Book a free trial today."
+      content="Private 1-on-1 Quran and Arabic classes on Zoom with qualified Arab teachers. Book a free trial today."
     />
 
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Online Quran Academy" />
     <meta
       property="og:description"
-      content="Private 1-on-1 Quran and Arabic classes on Zoom with qualified Egyptian teachers. Book a free trial today."
+      content="Private 1-on-1 Quran and Arabic classes on Zoom with qualified Arab teachers. Book a free trial today."
     />
     <meta property="og:site_name" content="Online Quran Academy" />
     <meta property="og:locale" content="en_US" />
@@ -21,7 +21,7 @@
     <meta name="twitter:title" content="Online Quran Academy" />
     <meta
       name="twitter:description"
-      content="Private 1-on-1 Quran and Arabic classes on Zoom with qualified Egyptian teachers."
+      content="Private 1-on-1 Quran and Arabic classes on Zoom with qualified Arab teachers."
     />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -454,6 +454,147 @@
         }
       }
 
+      /* ─── Pricing — program tiles ────────────── */
+      .program-tiles {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+        margin-bottom: 2.75rem;
+      }
+      @media (min-width: 640px) {
+        .program-tiles {
+          grid-template-columns: repeat(3, 1fr);
+          gap: 0.85rem;
+        }
+      }
+      @media (min-width: 1024px) {
+        .program-tiles {
+          grid-template-columns: repeat(6, 1fr);
+          gap: 0.85rem;
+        }
+      }
+      .program-tile {
+        position: relative;
+        overflow: hidden;
+        background-color: var(--burgundy);
+        color: #fff;
+        border: none;
+        border-radius: 14px;
+        cursor: pointer;
+        padding: 1.5rem 1.1rem;
+        text-align: left;
+        font-family: inherit;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        min-height: 160px;
+        transition: transform 200ms ease, box-shadow 200ms ease;
+      }
+      .program-tile::before {
+        content: "";
+        position: absolute;
+        inset: -10%;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='none' stroke='%23faf7f0' stroke-width='1.2'%3E%3Cpath d='M40 6 L48 28 L70 32 L52 48 L60 70 L40 56 L20 70 L28 48 L10 32 L32 28 Z'/%3E%3Ccircle cx='40' cy='40' r='6'/%3E%3Cpath d='M40 18 L46 32 L60 36 L48 46 L52 60 L40 52 L28 60 L32 46 L20 36 L34 32 Z'/%3E%3C/g%3E%3C/svg%3E");
+        background-size: 80px 80px;
+        background-repeat: repeat;
+        opacity: 0.22;
+        filter: blur(1.4px);
+        pointer-events: none;
+      }
+      .program-tile::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          180deg,
+          rgba(122, 45, 45, 0.05) 0%,
+          rgba(94, 32, 32, 0.45) 100%
+        );
+        pointer-events: none;
+      }
+      .program-tile > * {
+        position: relative;
+        z-index: 1;
+      }
+      .program-tile:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 14px 32px -18px rgba(122, 45, 45, 0.55);
+      }
+      .program-tile:focus-visible {
+        outline: 3px solid var(--gold);
+        outline-offset: 3px;
+      }
+      .program-tile[aria-checked="true"] {
+        box-shadow: 0 0 0 3px var(--gold), 0 16px 36px -18px rgba(122, 45, 45, 0.6);
+        transform: translateY(-2px);
+      }
+      .program-tile[aria-checked="true"]::after {
+        background: linear-gradient(
+          180deg,
+          rgba(158, 123, 47, 0.18) 0%,
+          rgba(94, 32, 32, 0.55) 100%
+        );
+      }
+      .tile-title {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.12rem;
+        font-weight: 600;
+        line-height: 1.2;
+        margin-bottom: 0.4rem;
+        display: block;
+      }
+      .tile-desc {
+        font-size: 0.78rem;
+        line-height: 1.4;
+        opacity: 0.9;
+        display: block;
+      }
+
+      /* ─── Pricing — plans panel ──────────────── */
+      .plans-panel {
+        scroll-margin-top: 90px;
+      }
+      .plans-prompt {
+        text-align: center;
+        color: var(--ink-mute);
+        font-size: 0.95rem;
+        padding: 2.75rem 1rem;
+        border: 1px dashed var(--rule);
+        border-radius: 14px;
+        background: var(--bg-card);
+      }
+      .plans-header {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 0.75rem;
+        margin-bottom: 1.75rem;
+      }
+      .plans-header h3 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.45rem;
+        font-weight: 600;
+      }
+      .plans-header .for-program {
+        color: var(--burgundy);
+      }
+      .change-program {
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: var(--burgundy);
+        font-family: "DM Sans", sans-serif;
+        font-size: 0.9rem;
+        font-weight: 600;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+        padding: 0;
+      }
+      .change-program:hover {
+        color: var(--burgundy-dark);
+      }
+
       /* ─── Pricing ────────────────────────────── */
       .pricing-tag {
         display: inline-block;
@@ -522,18 +663,20 @@
         margin-bottom: 0.25rem;
       }
       .price-now {
-        font-family: "Cormorant Garamond", serif;
-        font-size: 2.4rem;
-        font-weight: 600;
+        font-family: "DM Sans", sans-serif;
+        font-size: 2rem;
+        font-weight: 700;
+        letter-spacing: -0.01em;
         color: var(--burgundy);
         line-height: 1;
       }
       .price-now .per {
-        font-size: 0.95rem;
+        font-size: 0.9rem;
         font-weight: 500;
         color: var(--ink-mute);
         font-family: "DM Sans", sans-serif;
         margin-left: 0.2rem;
+        letter-spacing: 0;
       }
       .price-card .btn {
         margin-top: 1.75rem;
@@ -564,48 +707,52 @@
         margin-bottom: 0.5rem;
       }
 
-      /* ─── Testimonials ───────────────────────── */
-      .testimonials {
+      /* ─── Teachers ───────────────────────────── */
+      .teachers-grid {
         display: grid;
         grid-template-columns: 1fr;
         gap: 1.5rem;
       }
-      @media (min-width: 880px) {
-        .testimonials {
+      @media (min-width: 720px) {
+        .teachers-grid {
           grid-template-columns: repeat(3, 1fr);
         }
       }
-      .testimonial {
+      .teacher {
         background: var(--bg-card);
         border: 1px solid var(--rule);
         border-radius: 14px;
-        padding: 2rem 1.75rem;
+        padding: 2.25rem 1.75rem;
+        text-align: center;
+      }
+      .teacher-avatar {
+        width: 96px;
+        height: 96px;
+        margin: 0 auto 1.25rem;
+        border-radius: 50%;
+        background: var(--bg);
+        border: 2px solid var(--burgundy);
         display: flex;
-        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
       }
-      .testimonial .quote {
-        font-family: "Cormorant Garamond", serif;
-        font-style: italic;
-        font-size: 1.15rem;
-        line-height: 1.55;
-        color: var(--ink);
-        margin-bottom: 1.5rem;
+      .teacher-avatar svg {
+        width: 64px;
+        height: 64px;
+        fill: none;
+        stroke: var(--burgundy);
+        stroke-width: 2.5;
+        stroke-linecap: round;
+        stroke-linejoin: round;
       }
-      .testimonial .quote::before {
-        content: "“";
-        font-size: 2rem;
-        line-height: 0;
-        color: var(--gold);
-        margin-right: 0.15rem;
+      .teacher h3 {
+        font-size: 1.25rem;
+        margin-bottom: 0.5rem;
       }
-      .testimonial .who {
-        font-size: 0.92rem;
+      .teacher-bio {
+        font-size: 0.95rem;
         color: var(--ink-mute);
-        margin-top: auto;
-      }
-      .testimonial .who strong {
-        color: var(--ink);
-        font-weight: 600;
       }
 
       /* ─── Final CTA ──────────────────────────── */
@@ -670,6 +817,7 @@
         <nav class="nav-links" aria-label="Primary">
           <a href="#home">Home</a>
           <a href="#programs">Programs</a>
+          <a href="#teachers">Teachers</a>
           <a href="#pricing">Pricing</a>
           <a href="#about">About</a>
           <a href="#contact">Contact</a>
@@ -694,6 +842,7 @@
       <div class="mobile-menu" id="mobile-menu">
         <a href="#home">Home</a>
         <a href="#programs">Programs</a>
+        <a href="#teachers">Teachers</a>
         <a href="#pricing">Pricing</a>
         <a href="#about">About</a>
         <a href="#contact">Contact</a>
@@ -736,7 +885,7 @@
 
         <h1 class="reveal">A Quran &amp; Arabic School, Built Around You.</h1>
         <p class="tagline reveal">
-          Private Quranic &amp; Arabic instruction from qualified Egyptian
+          Private Quranic &amp; Arabic instruction from qualified Arab
           teachers — one student, one teacher, on Zoom.
         </p>
 
@@ -761,7 +910,7 @@
           <h2>A learning experience worthy of the Book.</h2>
           <p>
             Every student is met where they are — guided patiently, with
-            scholarship rooted in Egypt’s tradition of Quranic teaching.
+            scholarship rooted in the classical tradition of Quranic teaching.
           </p>
         </div>
 
@@ -776,10 +925,11 @@
           </div>
           <div class="feature reveal">
             <div class="num">ii.</div>
-            <h3>Qualified Egyptian Teachers</h3>
+            <h3>Qualified Arab Teachers</h3>
             <p>
-              Our instructors are graduates of Al-Azhar and recognized Egyptian
-              institutes, each with verified ijazah.
+              Our instructors are trained at renowned schools, universities,
+              and institutes — each with verified ijazah and credentials we
+              vet personally.
             </p>
           </div>
           <div class="feature reveal">
@@ -881,64 +1031,93 @@
           <div class="pricing-tag">Launch Pricing</div>
           <h2>Simple, honest pricing.</h2>
           <p>
-            Monthly plans for private 1-on-1 lessons. Cancel anytime. Discounts
-            for siblings and families.
+            Choose a program, then pick the schedule that fits your week.
+            Monthly plans for private 1-on-1 lessons. Cancel anytime.
           </p>
         </div>
 
-        <div class="pricing-grid">
-          <div class="price-card reveal">
-            <h3>2 Days / Week</h3>
-            <div class="price-old">$70</div>
-            <div class="price-now">$45<span class="per">/mo</span></div>
-            <a
-              href="https://wa.me/201068172024"
-              class="btn btn-outline"
-              target="_blank"
-              rel="noopener"
-              >Book Free Trial</a
-            >
-          </div>
+        <div
+          class="program-tiles reveal"
+          role="radiogroup"
+          aria-label="Choose a program"
+          id="program-tiles"
+        >
+          <button
+            type="button"
+            class="program-tile"
+            role="radio"
+            aria-checked="false"
+            data-program="ijazah"
+          >
+            <span class="tile-title">Ijazah Quran Course</span>
+            <span class="tile-desc">
+              Memorize and earn an authenticated chain of transmission.
+            </span>
+          </button>
+          <button
+            type="button"
+            class="program-tile"
+            role="radio"
+            aria-checked="false"
+            data-program="tajweed"
+          >
+            <span class="tile-title">Tajweed Course</span>
+            <span class="tile-desc">
+              Master the rules of pronunciation, sound by sound.
+            </span>
+          </button>
+          <button
+            type="button"
+            class="program-tile"
+            role="radio"
+            aria-checked="false"
+            data-program="recitation"
+          >
+            <span class="tile-title">Recitation Correction</span>
+            <span class="tile-desc">
+              Refine your existing recitation, line by line.
+            </span>
+          </button>
+          <button
+            type="button"
+            class="program-tile"
+            role="radio"
+            aria-checked="false"
+            data-program="arabic"
+          >
+            <span class="tile-title">Arabic Language</span>
+            <span class="tile-desc">
+              Read, write, speak, and understand classical Arabic.
+            </span>
+          </button>
+          <button
+            type="button"
+            class="program-tile"
+            role="radio"
+            aria-checked="false"
+            data-program="qaida"
+          >
+            <span class="tile-title">Norani Qaida</span>
+            <span class="tile-desc">
+              The foundational primer for new readers of the Quran.
+            </span>
+          </button>
+          <button
+            type="button"
+            class="program-tile"
+            role="radio"
+            aria-checked="false"
+            data-program="manners"
+          >
+            <span class="tile-title">Islamic Manners</span>
+            <span class="tile-desc">
+              Adab and akhlaq for children and adults.
+            </span>
+          </button>
+        </div>
 
-          <div class="price-card reveal">
-            <h3>3 Days / Week</h3>
-            <div class="price-old">$80</div>
-            <div class="price-now">$55<span class="per">/mo</span></div>
-            <a
-              href="https://wa.me/201068172024"
-              class="btn btn-outline"
-              target="_blank"
-              rel="noopener"
-              >Book Free Trial</a
-            >
-          </div>
-
-          <div class="price-card popular reveal">
-            <span class="popular-pill">Most Popular</span>
-            <h3>4 Days / Week</h3>
-            <div class="price-old">$90</div>
-            <div class="price-now">$65<span class="per">/mo</span></div>
-            <a
-              href="https://wa.me/201068172024"
-              class="btn btn-primary"
-              target="_blank"
-              rel="noopener"
-              >Book Free Trial</a
-            >
-          </div>
-
-          <div class="price-card reveal">
-            <h3>5 Days / Week</h3>
-            <div class="price-old">$100</div>
-            <div class="price-now">$75<span class="per">/mo</span></div>
-            <a
-              href="https://wa.me/201068172024"
-              class="btn btn-outline"
-              target="_blank"
-              rel="noopener"
-              >Book Free Trial</a
-            >
-          </div>
+        <div class="plans-panel" id="plans-panel" aria-live="polite">
+          <p class="plans-prompt">Select a program above to see plans.</p>
         </div>
       </div>
     </section>
@@ -980,44 +1159,51 @@
       </div>
     </section>
 
-    <!-- ───── Testimonials ───── -->
-    <section>
+    <!-- ───── Our Teachers ───── -->
+    <section id="teachers">
       <div class="container">
         <div class="section-head reveal">
-          <div class="eyebrow">Voices from our students</div>
-          <h2>Trusted by families around the world.</h2>
+          <div class="eyebrow">Our Teachers</div>
+          <h2>Meet your instructors.</h2>
+          <p>
+            Patient, qualified, and dedicated to your growth — every teacher
+            on our roster is personally vetted.
+          </p>
         </div>
 
-        <div class="testimonials">
-          <div class="testimonial reveal">
-            <p class="quote">
-              My daughter went from struggling with the alphabet to reading
-              Surah Al-Mulk in six months. Her teacher is patient and kind —
-              exactly what we hoped for.
-            </p>
-            <div class="who">
-              <strong>Aisha R.</strong><br />Parent · London, UK
+        <div class="teachers-grid">
+          <article class="teacher reveal">
+            <div class="teacher-avatar" aria-hidden="true">
+              <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="32" cy="24" r="11" />
+                <path d="M10 58c2-12 12-18 22-18s20 6 22 18" />
+              </svg>
             </div>
-          </div>
-          <div class="testimonial reveal">
-            <p class="quote">
-              I had tried apps and YouTube for years. One month with a real
-              teacher and my Tajweed has improved more than all that combined.
-            </p>
-            <div class="who">
-              <strong>Yusuf M.</strong><br />Student · Toronto, Canada
+            <h3>Teacher Amir Dweer</h3>
+            <p class="teacher-bio">Bio coming soon.</p>
+          </article>
+
+          <article class="teacher reveal">
+            <div class="teacher-avatar" aria-hidden="true">
+              <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="32" cy="24" r="11" />
+                <path d="M10 58c2-12 12-18 22-18s20 6 22 18" />
+              </svg>
             </div>
-          </div>
-          <div class="testimonial reveal">
-            <p class="quote">
-              The flexibility was the key for our family. Classes around school,
-              homework, and time zones — and the quality is genuinely
-              excellent.
-            </p>
-            <div class="who">
-              <strong>Sarah K.</strong><br />Parent · Houston, USA
+            <h3>Teacher 2</h3>
+            <p class="teacher-bio">Bio coming soon.</p>
+          </article>
+
+          <article class="teacher reveal">
+            <div class="teacher-avatar" aria-hidden="true">
+              <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="32" cy="24" r="11" />
+                <path d="M10 58c2-12 12-18 22-18s20 6 22 18" />
+              </svg>
             </div>
-          </div>
+            <h3>Teacher 3</h3>
+            <p class="teacher-bio">Bio coming soon.</p>
+          </article>
         </div>
       </div>
     </section>
@@ -1059,6 +1245,7 @@
         <nav class="footer-links" aria-label="Footer">
           <a href="#home">Home</a>
           <a href="#programs">Programs</a>
+          <a href="#teachers">Teachers</a>
           <a href="#pricing">Pricing</a>
           <a href="#about">About</a>
           <a href="#contact">Contact</a>
@@ -1087,6 +1274,123 @@
         });
         menu.querySelectorAll("a").forEach(function (a) {
           a.addEventListener("click", close);
+        });
+      })();
+
+      // Pricing: program tiles → plans panel
+      (function () {
+        var WA = "https://wa.me/201068172024";
+        var DAYS = [
+          "2 Days / Week",
+          "3 Days / Week",
+          "4 Days / Week",
+          "5 Days / Week",
+        ];
+        var POPULAR_INDEX = 2;
+        var PROGRAMS = {
+          ijazah: { name: "Ijazah Quran Course", prices: [55, 65, 75, 85] },
+          tajweed: { name: "Tajweed Course", prices: [45, 55, 65, 75] },
+          recitation: {
+            name: "Recitation Correction",
+            prices: [45, 55, 65, 75],
+          },
+          arabic: { name: "Arabic Language", prices: [45, 55, 65, 75] },
+          qaida: { name: "Norani Qaida", prices: [45, 55, 65, 75] },
+          manners: { name: "Islamic Manners", prices: [35, 45, 55, 65] },
+        };
+
+        var tilesContainer = document.getElementById("program-tiles");
+        var panel = document.getElementById("plans-panel");
+        if (!tilesContainer || !panel) return;
+        var tiles = tilesContainer.querySelectorAll(".program-tile");
+
+        function renderPrompt() {
+          panel.innerHTML =
+            '<p class="plans-prompt">Select a program above to see plans.</p>';
+        }
+
+        function renderPlans(key) {
+          var prog = PROGRAMS[key];
+          if (!prog) return;
+          var cards = "";
+          for (var i = 0; i < DAYS.length; i++) {
+            var now = prog.prices[i];
+            var old = now + 25;
+            var isPopular = i === POPULAR_INDEX;
+            cards +=
+              '<div class="price-card' +
+              (isPopular ? " popular" : "") +
+              '">' +
+              (isPopular
+                ? '<span class="popular-pill">Most Popular</span>'
+                : "") +
+              "<h3>" +
+              DAYS[i] +
+              "</h3>" +
+              '<div class="price-old">$' +
+              old +
+              "</div>" +
+              '<div class="price-now">$' +
+              now +
+              '<span class="per">/mo</span></div>' +
+              '<a href="' +
+              WA +
+              '" class="btn ' +
+              (isPopular ? "btn-primary" : "btn-outline") +
+              '" target="_blank" rel="noopener">Book Free Trial</a>' +
+              "</div>";
+          }
+          panel.innerHTML =
+            '<div class="plans-header">' +
+            "<h3>" +
+            '<span class="for-program">' +
+            prog.name +
+            "</span>" +
+            " — choose your schedule" +
+            "</h3>" +
+            '<button type="button" class="change-program" id="change-program">Change program</button>' +
+            "</div>" +
+            '<div class="pricing-grid">' +
+            cards +
+            "</div>";
+
+          var changeBtn = document.getElementById("change-program");
+          if (changeBtn) {
+            changeBtn.addEventListener("click", function () {
+              tiles.forEach(function (t) {
+                t.setAttribute("aria-checked", "false");
+              });
+              renderPrompt();
+              tilesContainer.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+              });
+            });
+          }
+        }
+
+        function selectTile(tile) {
+          var key = tile.getAttribute("data-program");
+          tiles.forEach(function (t) {
+            t.setAttribute("aria-checked", t === tile ? "true" : "false");
+          });
+          renderPlans(key);
+          // Defer to allow paint, then scroll panel into view
+          window.requestAnimationFrame(function () {
+            panel.scrollIntoView({ behavior: "smooth", block: "start" });
+          });
+        }
+
+        tiles.forEach(function (tile) {
+          tile.addEventListener("click", function () {
+            selectTile(tile);
+          });
+          tile.addEventListener("keydown", function (e) {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              selectTile(tile);
+            }
+          });
         });
       })();
 
